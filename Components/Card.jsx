@@ -5,6 +5,19 @@ import './style.css';
 
 export let testcount=0;
 
+let elementcount=[{}];
+
+
+function presetdata()
+{
+    elementcount=data.map((x)=>({id:x.id,curcount:0,totcount:0}));
+    // for(let i=0;i<data.length;i++)
+    //     {
+    //         elementcount[i]={id:data[i].id,curcount:0,totcount:0};
+    //     }
+     console.log("data",elementcount);
+}
+
 function handleclick2(id)
 {
   testcount++;
@@ -17,6 +30,15 @@ function handleclick(id){
   data[id].cartstatus="true";
   console.log("count:",id,data[id].cartstatus,testcount)
 };
+
+function handleclickdynamic(id,cnt,setcnt,cnttracker)
+{
+    setcnt((cnt) => cnt + 1);
+    cnttracker[id].curcount+=1;
+    cnttracker[id].totcount=cnt;
+    console.log("checkid:",id,cnttracker[id]);
+
+}
 
  const cartchange=(index,status)=>
   {
@@ -77,11 +99,11 @@ function handleclick(id){
     return starclass;                             
   }
 
-function createcardcontent(element,cnt,setcnt)
+function createcardcontent(element,cnt,setcnt,cnttracker)
 {
-
  return (
-   <div key={element.id} className="col mb-5">
+  
+  <div key={element.id} className="col mb-5">
         <div className="card h-100">
             {/* <!-- Product image--> */}
             {checkforsale(element,element.salestatus).lable}
@@ -103,7 +125,9 @@ function createcardcontent(element,cnt,setcnt)
             {/* <!-- Product actions--> */}
             <div className="card-footer p-4 pt-0 border-top-0 bg-transparent">
               {/* <div className="text-center"><a className="btn btn-outline-dark mt-auto" href="#"  onClick={handleclick.bind(this,element.id)}>Add to card</a></div> */}
-              <div className="text-center"><a className="btn btn-outline-dark mt-auto" href="#"  onClick={()=>setcnt((cnt) => cnt + 1)}>Add to card</a></div>
+              {/* <div className="text-center"><a className="btn btn-outline-dark mt-auto" href="#"  onClick={()=>setcnt((cnt) => cnt + 1)}>Add to card</a></div> */}
+              <div className="text-center"><a className="btn btn-outline-dark mt-auto" href="#"  onClick={handleclickdynamic.bind(this,element.id,cnt,setcnt,cnttracker)}>Add to card</a></div>
+
 
           </div>
        </div>
@@ -111,25 +135,28 @@ function createcardcontent(element,cnt,setcnt)
  )
 }
 
+
+
 const cardbox=data.map((element)=>(createcardcontent(element)));
 
 
-function setupcardboxwithbtns(cnt,setcont)
+function setupcardboxwithbtns(cnt,setcont,cnttracker)
 {
     let datascard=[];
     for(let i=0;i<data.length;i++)
     {
-       datascard.push(createcardcontent(data[i],cnt,setcont));
+       datascard.push(createcardcontent(data[i],cnt,setcont,cnttracker));
     }
 
     return datascard;
 }
 
-const Card = ({mycount,mysetcount}) => {
+const Card = ({mycount,mysetcount,counttracker}) => {
+
   return (
     <>
      {/* {cardbox} */}
-     {setupcardboxwithbtns(mycount,mysetcount)}
+     {setupcardboxwithbtns(mycount,mysetcount,counttracker)}
     </>
   )
 }
