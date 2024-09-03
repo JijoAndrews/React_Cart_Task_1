@@ -5,18 +5,6 @@ import './style.css';
 
 export let testcount=0;
 
-let elementcount=[{}];
-
-
-function presetdata()
-{
-    elementcount=data.map((x)=>({id:x.id,curcount:0,totcount:0}));
-    // for(let i=0;i<data.length;i++)
-    //     {
-    //         elementcount[i]={id:data[i].id,curcount:0,totcount:0};
-    //     }
-     console.log("data",elementcount);
-}
 
 function handleclick2(id)
 {
@@ -31,26 +19,46 @@ function handleclick(id){
   console.log("count:",id,data[id].cartstatus,testcount)
 };
 
-function handleclickdynamic(id,cnt,setcnt,cnttracker)
+function handleincrement(id,cnt,setcnt,cnttracker)
 {
     setcnt((cnt) => cnt + 1);
     cnttracker[id].curcount+=1;
     cnttracker[id].totcount=cnt;
+    cnttracker[id].status="true";
     console.log("checkid:",id,cnttracker[id]);
 
 }
 
- const cartchange=(index,status)=>
+
+function handledecrement(id,cnt,setcnt,cnttracker)
+{
+    setcnt((cnt) => cnt - 1);
+    cnttracker[id].curcount-=1;
+    cnttracker[id].totcount=cnt;
+    cnttracker[id].status="false";
+    console.log("checkid:",id,cnttracker[id]);
+
+}
+
+ const cartchange=(index,status,cnt,setcnt,cnttracker)=>
   {
       let tag;
       
-      if(data[index].cartstatus===status)
-      {
-        tag=(<div className="text-center"><a className="btn btn-outline-dark mt-auto" href="#"  onClick={handleclick.bind(this,data[index].id)}>Add to card</a></div>);
-      }else
-      {
-        tag=(<div className="text-center"><a className="btn btn-outline-dark mt-auto" href="#"  onClick={handleclick.bind(this,data[index].id)}>remove from card</a></div>);
-      }
+    //   if(data[index].cartstatus===status)
+    //   {
+    //     tag=(<div className="text-center"><a className="btn btn-outline-dark mt-auto" href="#"  onClick={handleclickdynamic.bind(this,index,cnt,setcnt,cnttracker)}>Add to card</a></div>);
+    //   }else
+    //   {
+    //     tag=(<div className="text-center"><a className="btn btn-outline-dark mt-auto" href="#"  onClick={handleclickdynamic.bind(this,index,cnt,setcnt,cnttracker)}>remove from card</a></div>);
+    //   }
+
+      if(cnttracker[index].status==="false")
+        {
+          tag=(<div className="text-center"><a className="btn btn-outline-dark mt-auto" href="#"  onClick={handleincrement.bind(this,index,cnt,setcnt,cnttracker)}>Add to card</a></div>);
+        }else
+        {
+          tag=(<div className="text-center"><a className="btn btn-outline-dark mt-auto" href="#"  onClick={handledecrement.bind(this,index,cnt,setcnt,cnttracker)}>remove from card</a></div>);
+        }
 
     return tag;
   };
@@ -126,7 +134,10 @@ function createcardcontent(element,cnt,setcnt,cnttracker)
             <div className="card-footer p-4 pt-0 border-top-0 bg-transparent">
               {/* <div className="text-center"><a className="btn btn-outline-dark mt-auto" href="#"  onClick={handleclick.bind(this,element.id)}>Add to card</a></div> */}
               {/* <div className="text-center"><a className="btn btn-outline-dark mt-auto" href="#"  onClick={()=>setcnt((cnt) => cnt + 1)}>Add to card</a></div> */}
-              <div className="text-center"><a className="btn btn-outline-dark mt-auto" href="#"  onClick={handleclickdynamic.bind(this,element.id,cnt,setcnt,cnttracker)}>Add to card</a></div>
+              
+                {cartchange(element.id,element.cartstatus,cnt,setcnt,cnttracker)}
+              
+              {/* <div className="text-center"><a className="btn btn-outline-dark mt-auto" href="#"  onClick={handleclickdynamic.bind(this,element.id,cnt,setcnt,cnttracker)}>Add to card</a></div> */}
 
 
           </div>
@@ -136,8 +147,7 @@ function createcardcontent(element,cnt,setcnt,cnttracker)
 }
 
 
-
-const cardbox=data.map((element)=>(createcardcontent(element)));
+// const cardbox=data.map((element)=>(createcardcontent(element)));
 
 
 function setupcardboxwithbtns(cnt,setcont,cnttracker)

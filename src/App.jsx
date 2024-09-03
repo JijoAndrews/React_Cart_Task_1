@@ -9,7 +9,7 @@ let elementcount=[{}];
 
 function presetdata()
 {
-  elementcount=data.map((x)=>({id:x.id,curcount:0,totcount:0}));
+  elementcount=data.map((x)=>({id:x.id,curcount:0,totcount:0,status:"false"}));
   console.log("data",elementcount);
 }
 
@@ -46,7 +46,6 @@ function Visualbtn({mycount})
 const Bodycontent = ({mycount,mysetcount}) => {
 
   return (
-
     <>
         <section className="py-5">
             <div className="container px-4 px-lg-5 mt-5">
@@ -62,18 +61,18 @@ const Bodycontent = ({mycount,mysetcount}) => {
 presetdata();
 
 function App(){
+
   const [count, setCount] = useState(0)
   return (
     <> 
      <Navbar totalcounter={count}/>
      <Bodycontent  mycount={count} mysetcount={setCount}/>
-      <h1>Vite + React</h1>
-
-      <Visualbtn mycount={count}/>
+      
+      {/* <Visualbtn mycount={count}/>
       <Testbtn mycount={count} mysetcount={setCount}/>
       <p className="read-the-docs">
         Click on the Vite and React logos to learn more
-      </p>
+      </p> */}
     </>
   )
 }

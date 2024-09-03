@@ -3,7 +3,7 @@ export const data=[
     {id:0,
      productname:"brush",
      productvalue:"100",
-     cartstatus:"false",
+     cartstatus:"true",
      starstatus:"false",
      salestatus:"false",
      startcount:0,
