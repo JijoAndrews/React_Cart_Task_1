@@ -40,6 +40,7 @@ const Navbar = ({totalcounter}) => {
                             <span className="badge bg-dark text-white ms-1 rounded-pill">
                                 {/* {totalcounter[3].cartcount} */}
                                 {/* {totalcounter[[...totalcounter].length].totcount} */}
+                                {totalcounter}
                                 </span>
                         </button>
 
