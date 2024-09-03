@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
-import './App.css'
-
+import '../Components/style.css'
+import Navbar from '../Components/Navbar'
 
 function Testbtn({mycount,mysetcount})
 {
@@ -36,20 +36,15 @@ function App(){
   const [count, setCount] = useState(0)
 
   return (
-    <>
-     
-      <h1>Vite + React</h1>
-      {/* <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-      </div> */}
+    <> 
+     <Navbar/>
+      {/* <h1>Vite + React</h1>
 
       <Visualbtn mycount={count}/>
       <Testbtn mycount={count} mysetcount={setCount}/>
       <p className="read-the-docs">
         Click on the Vite and React logos to learn more
-      </p>
+      </p> */}
     </>
   )
 }
